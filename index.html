@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap&subset=cyrillic" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="shopping-app">
+        <div class="header">
+            <h1>{{ header.toLocaleUpperCase() }}</h1>
+            <button v-if="state ==='default'" class="btn primary-btn" v-on:click="changeState('edit')">Add Item</button>
+            <button v-else class="btn cencel-btn" v-on:click="changeState('default')">Cencel</button>
+        </div>
+
+        <div v-if="state === 'edit'" class="add-item_form">
+            <input type="text" v-model="newItem" placeholder="Add an Item" v-on:keyup.enter="saveItem" maxlength="200">
+            <p class="count">{{characterCount}}/200</p>
+            <button class="btn save-btn" v-bind:disabled="newItem.length === 0" v-on:click="saveItem">Save Item</button>
+        </div>
+
+        <p id="empty-list_text" v-if="items.length === 0">You'we bought all your items!</p>
+
+        <ul class="out">
+            <li v-for="item in reverseItems" :class="[item.purchased ? 'strikeout': '']" @click="togglePurchased(item)">
+                {{ item.label }}</li>
+        </ul>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
